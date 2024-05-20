@@ -5,11 +5,12 @@ public class GameScene extends JPanel {
     double DeltaTime = 0;
     long oldTime = System.nanoTime();
     long newTime = oldTime;
+    
     public GameScene(){
+
         mainGameLoop();
     }
     public void mainGameLoop(){
-
         new Thread(()->{
             while (true){
                 newTime = System.nanoTime();
@@ -17,6 +18,8 @@ public class GameScene extends JPanel {
                 oldTime = newTime;
                 System.out.println(newTime);
                 System.out.println(DeltaTime);
+
+
 
                 repaint();
             }
