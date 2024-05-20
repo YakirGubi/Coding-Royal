@@ -1,5 +1,7 @@
 public class TankG {
 
+    final int width = 50;
+    final int height = 50;
     double[] locationV; // location of the tank (vector of x,y)
     double[] directionV; // the direction vector of the tank (vector of x,y)
     int HP;
@@ -47,7 +49,15 @@ public class TankG {
         return time_in_reload;
     }
 
-     public boolean isIs_reload() {
+    public boolean isIs_reload() {
         return is_reload;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 }
