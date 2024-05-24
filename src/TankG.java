@@ -1,17 +1,22 @@
+import java.util.ArrayList;
+
 public class TankG {
 
     final int width = 50;
     final int height = 50;
-    double[] locationV; // location of the tank (vector of x,y)
-    double[] directionV; // the direction vector of the tank (vector of x,y)
-    int HP;
+    protected double[] locationV; // location of the tank (vector of x,y)
+    protected double[] directionV; // the direction vector of the tank (vector of x,y)
+    protected int HP;
     final int maxHP = 100;
     final int magazine_capacity = 10;
-    int bullet_amount;
-    double speed;
+    protected int bullet_amount;
+    final double speed = 20; // change later
     final double reload_time = 1;
-    double time_in_reload;
-    boolean is_reload;
+    protected double time_in_reload;
+    protected boolean is_reload;
+    final double rotation_speed = (Math.PI / 180);
+    protected ArrayList<Bullet> bullets = new ArrayList<>();
+
 
     public double[] getLocationV() {
         return locationV;
