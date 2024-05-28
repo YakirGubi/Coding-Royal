@@ -65,6 +65,13 @@ public class TankS extends TankG{
         for (int i = 0; i < this.bullets.size(); i++) {
             this.bullets.get(i).move(deltaTime);
         }
+
+        for (Bullet bullet: this.bullets) {
+            bullet.move(deltaTime);
+            if (bullet.location[0] < 0 || bullet.location[0] > 1920 || bullet.location[1] < 0 || bullet.location[1] > 1080) {
+                bullets.remove(bullet);
+            }
+        }
     }
 
     public void setLocationV(double[] locationV) {
