@@ -2,6 +2,7 @@ public class TankS extends TankG{
 
     public TankS(double[] locationV, double degree) {
         this.locationV = locationV;
+        this.directionV = new double[2];
         rotate(0);
         this.HP = this.maxHP;
         this.bullet_amount = this.magazine_capacity;
