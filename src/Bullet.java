@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Bullet {
 
     protected double[] location;
@@ -8,8 +10,8 @@ public class Bullet {
 
     Bullet(double[] location, double[] direction) {
 
-        this.location = location;
-        this.direction = direction;
+        this.location = Arrays.copyOf(location, location.length);
+        this.direction = Arrays.copyOf(direction, direction.length);
     }
 
     public void move(double deltaTime) {

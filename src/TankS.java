@@ -1,12 +1,13 @@
 public class TankS extends TankG{
 
-    public TankS(double[] locationV, double[] directionV) {
+    public TankS(double[] locationV, double degree) {
         this.locationV = locationV;
-        this.directionV = directionV;
+        rotate(0);
         this.HP = this.maxHP;
         this.bullet_amount = this.magazine_capacity;
         this.time_in_reload = 0;
         this.is_reload = false;
+        this.degree = degree;
     }
 
     public void reload(double deltaTime, boolean is_reload) {
@@ -31,20 +32,22 @@ public class TankS extends TankG{
 
     public void rotate(double degree) { // the rotation function
 
-        this.directionV[0] = Math.sin(Math.asin(this.directionV[0]) + (degree * this.rotation_speed));
-        this.directionV[1] = Math.cos(Math.acos(this.directionV[1]) + (degree * this.rotation_speed));
+        this.degree += degree * this.rotation_speed;
+        this.directionV[0] = Math.cos(this.degree);
+        this.directionV[1] = Math.sin(this.degree);
     }
 
     public void move(double step, double deltaTime) { // the move forward function
 
-        this.locationV[0] = this.locationV[0] + (step * deltaTime * this.directionV[0]);
-        this.locationV[1] = this.locationV[1] + (step * deltaTime * this.directionV[1]);
+        this.locationV[0] = this.locationV[0] + (step * this.speed * deltaTime * this.directionV[0]);
+        this.locationV[1] = this.locationV[1] + (step * this.speed * deltaTime * this.directionV[1]);
     }
 
     public void shot(boolean is_shot) {
 
         if (is_shot) {
             if (this.bullet_amount > 0) {
+
                 Bullet bullet = new Bullet(this.locationV, this.directionV);
                 this.bullets.add(bullet);
                 this.bullet_amount--;
