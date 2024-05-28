@@ -11,8 +11,8 @@ public class Bullet {
     Bullet(double[] location, double[] direction) {
 
         this.location = new double[location.length];
-        this.location[0] = location[0] + 50;
-        this.location[1] = location[1] + 50;
+        this.location[0] = location[0] + 50 / 2;
+        this.location[1] = location[1] + 50 / 2;
         //this.location = Arrays.copyOf(location, location.length);
         this.direction = Arrays.copyOf(direction, direction.length);
     }
