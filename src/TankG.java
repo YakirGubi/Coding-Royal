@@ -15,6 +15,7 @@ public class TankG {
     protected double time_in_reload;
     protected boolean is_reload;
     final double rotation_speed = (Math.PI / 180);
+    protected double degree;
     protected ArrayList<Bullet> bullets = new ArrayList<>();
 
 
@@ -64,5 +65,8 @@ public class TankG {
 
     public int getHeight() {
         return height;
+    }
+    public double getDegree() {
+        return degree;
     }
 }
