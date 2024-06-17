@@ -9,17 +9,17 @@ public class Inputs {
 
         if (rotation_degree <= 1 && rotation_degree >= -1) {
             this.rotation_degree = rotation_degree;
-        }else if (rotation_degree > 1) {
+        } else if (rotation_degree > 1) {
             this.rotation_degree = 1;
-        }else {
+        } else {
             this.rotation_degree = -1;
         }
 
         if (step <= 1 && step >= -1) {
             this.step = step;
-        }else if (step > 1) {
+        } else if (step > 1) {
             this.step = 1;
-        }else {
+        } else {
             this.step = -1;
         }
 

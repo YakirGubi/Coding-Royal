@@ -6,7 +6,7 @@ public class Bullet {
     protected double[] direction;
     final int wight = 10;
     final int height = 10;
-    final double speed = 30;
+    final double speed = 100;
 
     Bullet(double[] location, double[] direction) {
 

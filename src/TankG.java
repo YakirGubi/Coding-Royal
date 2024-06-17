@@ -14,9 +14,10 @@ public class TankG {
     final double reload_time = 1;
     protected double time_in_reload;
     protected boolean is_reload;
-    final double rotation_speed = (Math.PI / 180);
+    final double rotation_speed = (Math.PI / 180) / 10000;
     protected double degree;
     protected ArrayList<Bullet> bullets = new ArrayList<>();
+    protected int kills;
 
 
     public double[] getLocationV() {
