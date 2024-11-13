@@ -2,11 +2,10 @@ import java.util.ArrayList;
 
 public class TankG {
 
-    final int width = 50;
-    final int height = 50;
+    final int radius = 50;
     protected double[] locationV; // location of the tank (vector of x,y)
     protected double[] directionV; // the direction vector of the tank (vector of x,y)
-    protected int HP;
+    protected double HP;
     final int maxHP = 100;
     final int magazine_capacity = 10;
     protected int bullet_amount;
@@ -28,7 +27,7 @@ public class TankG {
         return directionV;
     }
 
-    public int getHP() {
+    public double getHP() {
         return HP;
     }
 
@@ -60,13 +59,7 @@ public class TankG {
         return is_reload;
     }
 
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
+    public int getRadius() {return radius;}
     public double getDegree() {
         return degree;
     }

@@ -27,9 +27,9 @@ public class TankS extends TankG {
         }
     }
 
-    public void took_a_hit() {
+    public void took_a_hit(double damage) {
 
-        this.HP = this.HP - 10;
+        this.HP -= damage;
     }
 
     public void rotate(double degree, double deltaTime) { // the rotation function
