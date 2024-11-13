@@ -12,6 +12,8 @@ public class GameScene extends JPanel {
     TankS[] tankSS = new TankS[numberOfPlayers];
     Inputs[] inputs = new Inputs[numberOfPlayers];
 
+    Zone zone = new Zone();
+
     public GameScene(){
         for(double i = 0 ; i < numberOfPlayers ; i++){
             int diameter = 300;
@@ -20,7 +22,7 @@ public class GameScene extends JPanel {
             double degree = -i/numberOfPlayers * 2*Math.PI;
             tankSS[(int) i] = new TankS(location, degree);
             tankGS[(int) i] = tankSS[(int) i];
-            inputs[(int) i] = new Inputs(0.00001,0.5,false, false);
+            inputs[(int) i] = new Inputs(1,1,false, false);
         }
 
         mainGameLoop();
@@ -31,6 +33,8 @@ public class GameScene extends JPanel {
                 newTime = System.nanoTime();
                 DeltaTime = (newTime - oldTime) / Math.pow(10,9);
                 oldTime = newTime;
+
+                zone.move_zone(DeltaTime);
 
                 for(int i = 0 ; i < numberOfPlayers ; i++){
                     tankSS[i].doMove(inputs[i], DeltaTime);
@@ -51,6 +55,11 @@ public class GameScene extends JPanel {
                             }
                         }
                     }
+                    double distanceX = Math.abs(tankSS[i].getLocationV()[0] - zone.location[0]);
+                    double distanceY = Math.abs(tankSS[i].getLocationV()[1] - zone.location[1]);
+                    if(distanceX > zone.radius || distanceY > zone.radius ){
+                        tankSS[i].took_a_hit();
+                    }
                 }
 
                 repaint();
@@ -62,8 +71,11 @@ public class GameScene extends JPanel {
 
         super.paintComponent(graphics);
 
-        graphics.setColor(Color.BLACK);
+        graphics.setColor(Color.PINK);
         graphics.fillRect(0,0,1920,1080);
+
+        graphics.setColor(Color.BLACK);
+        graphics.fillOval((int)(zone.location[0] - zone.radius), (int)(zone.location[1] - zone.radius), (int)zone.radius*2, (int)zone.radius*2);
 
         for(TankS tankS : tankSS){
             if(tankS.getHP() > 0) {
@@ -78,11 +90,6 @@ public class GameScene extends JPanel {
                            (int)Math.round(tankS.getLocationV()[1] + (double)tankS.getWidth()/2 + Math.sin(tankS.degree - 3*Math.PI/4) * Math.sqrt(2) * tankS.getWidth()/2)};
                 graphics.fillPolygon(X, Y, 4);
 
-                graphics.setColor(Color.RED);
-                for(Bullet bullet : tankS.bullets){
-                    graphics.fillOval((int)bullet.getLocation()[0], (int)bullet.getLocation()[1], bullet.getWight(), bullet.getHeight());
-                }
-
                 graphics.setColor(Color.BLACK);
                 double radius = 0.3 * tankS.getWidth() * Math.sqrt(2);
 
@@ -96,6 +103,10 @@ public class GameScene extends JPanel {
                                   (int)Math.round(tankS.getLocationV()[1] + (double)tankS.getWidth()/2 + Math.sin(tankS.degree - 3*Math.PI/4) * radius)};
                 graphics.fillPolygon(X_Turret, Y_Turret, 4);
 
+            }
+            graphics.setColor(Color.RED);
+            for(Bullet bullet : tankS.bullets){
+                graphics.fillOval((int)bullet.getLocation()[0], (int)bullet.getLocation()[1], bullet.getWight(), bullet.getHeight());
             }
         }
 
