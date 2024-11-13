@@ -11,10 +11,10 @@ public class Zone {
 
     Zone() {
         location = new double[2];
-        location[0] = 200;
-        location[1] = 200;
-        step = 1;
-        radius = 50;
+        location[0] = 770;
+        location[1] = 430;
+        step = 20;
+        radius = 1000;
         isShrinking = true;
         endOfZonTime = 5;
         zoneTime = 0;
@@ -36,7 +36,7 @@ public class Zone {
         }
 
         if (isShrinking) {
-            radius = radius + (step * deltaTime);
+            radius -= (step * deltaTime);
         }
     }
 }
