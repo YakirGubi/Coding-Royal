@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.util.Arrays;
 
 public class GameScene extends JPanel {
     double DeltaTime = 0;
@@ -22,7 +21,7 @@ public class GameScene extends JPanel {
             double degree = -i/numberOfPlayers * 2*Math.PI;
             tankSS[(int) i] = new TankS(location, degree);
             tankGS[(int) i] = tankSS[(int) i];
-            inputs[(int) i] = new Inputs(1,1,false, false);
+            inputs[(int) i] = new Inputs(1,1,false, true);
         }
 
         mainGameLoop();
@@ -45,12 +44,9 @@ public class GameScene extends JPanel {
                     for(Bullet bullet : tankSS[i].bullets){
                         for(int j = 0 ; j < numberOfPlayers ; j++){
                             if(i == j) continue;
-                            if(bullet.getLocation()[0] < tankSS[j].getLocationV()[0] + tankSS[j].getWidth() &&
-                               bullet.getLocation()[0] > tankSS[j].getLocationV()[0] - bullet.getWight() &&
-                               bullet.getLocation()[1] < tankSS[j].getLocationV()[1] + tankSS[j].getHeight() &&
-                               bullet.getLocation()[1] > tankSS[j].getLocationV()[1] - bullet.getHeight() ){
-
-                                tankSS[j].took_a_hit();
+                            double distance = Math.sqrt(Math.pow(tankSS[j].locationV[0] - bullet.getLocation()[0], 2) + Math.pow(tankSS[j].locationV[1] - bullet.getLocation()[1], 2));
+                            if(distance < (tankSS[j].radius + bullet.getRadius())){
+                                tankSS[j].took_a_hit(10);
                                 System.out.println("Hit");
                             }
                         }
@@ -58,7 +54,7 @@ public class GameScene extends JPanel {
                     double distanceX = Math.abs(tankSS[i].getLocationV()[0] - zone.location[0]);
                     double distanceY = Math.abs(tankSS[i].getLocationV()[1] - zone.location[1]);
                     if(distanceX > zone.radius || distanceY > zone.radius ){
-                        tankSS[i].took_a_hit();
+                        tankSS[i].took_a_hit(1*DeltaTime);
                     }
                 }
 
@@ -80,33 +76,24 @@ public class GameScene extends JPanel {
         for(TankS tankS : tankSS){
             if(tankS.getHP() > 0) {
                 graphics.setColor(Color.YELLOW);
-                int[] X = {(int)Math.round(tankS.getLocationV()[0] + (double)tankS.getWidth()/2 + Math.cos(tankS.degree + 3*Math.PI/4) * Math.sqrt(2) * tankS.getWidth()/2),
-                           (int)Math.round(tankS.getLocationV()[0] + (double)tankS.getWidth()/2 + Math.cos(tankS.degree + Math.PI/4) * Math.sqrt(2) * tankS.getWidth()/2),
-                           (int)Math.round(tankS.getLocationV()[0] + (double)tankS.getWidth()/2 + Math.cos(tankS.degree - Math.PI/4) * Math.sqrt(2) * tankS.getWidth()/2),
-                           (int)Math.round(tankS.getLocationV()[0] + (double)tankS.getWidth()/2 + Math.cos(tankS.degree - 3*Math.PI/4) * Math.sqrt(2) * tankS.getWidth()/2)};
-                int[] Y = {(int)Math.round(tankS.getLocationV()[1] + (double)tankS.getWidth()/2 + Math.sin(tankS.degree + 3*Math.PI/4) * Math.sqrt(2) * tankS.getWidth()/2),
-                           (int)Math.round(tankS.getLocationV()[1] + (double)tankS.getWidth()/2 + Math.sin(tankS.degree + Math.PI/4) * Math.sqrt(2) * tankS.getWidth()/2),
-                           (int)Math.round(tankS.getLocationV()[1] + (double)tankS.getWidth()/2 + Math.sin(tankS.degree - Math.PI/4) * Math.sqrt(2) * tankS.getWidth()/2),
-                           (int)Math.round(tankS.getLocationV()[1] + (double)tankS.getWidth()/2 + Math.sin(tankS.degree - 3*Math.PI/4) * Math.sqrt(2) * tankS.getWidth()/2)};
-                graphics.fillPolygon(X, Y, 4);
+                graphics.fillOval((int)(tankS.getLocationV()[0] - tankS.radius), (int)(tankS.getLocationV()[1] - tankS.radius), tankS.radius*2, tankS.radius*2);
 
                 graphics.setColor(Color.BLACK);
-                double radius = 0.3 * tankS.getWidth() * Math.sqrt(2);
+                double radius = 0.7 * tankS.radius;
 
-                int[] X_Turret = {(int)Math.round(tankS.getLocationV()[0] + (double)tankS.getWidth()/2 + Math.cos(tankS.degree + 3*Math.PI/4) * radius),
-                                  (int)Math.round(tankS.getLocationV()[0] + (double)tankS.getWidth()/2 + Math.cos(tankS.degree + 0.1*Math.PI) * radius),
-                                  (int)Math.round(tankS.getLocationV()[0] + (double)tankS.getWidth()/2 + Math.cos(tankS.degree - 0.1*Math.PI) * radius),
-                                  (int)Math.round(tankS.getLocationV()[0] + (double)tankS.getWidth()/2 + Math.cos(tankS.degree - 3*Math.PI/4) * radius)};
-                int[] Y_Turret = {(int)Math.round(tankS.getLocationV()[1] + (double)tankS.getWidth()/2 + Math.sin(tankS.degree + 3*Math.PI/4) * radius),
-                                  (int)Math.round(tankS.getLocationV()[1] + (double)tankS.getWidth()/2 + Math.sin(tankS.degree + 0.1*Math.PI) * radius),
-                                  (int)Math.round(tankS.getLocationV()[1] + (double)tankS.getWidth()/2 + Math.sin(tankS.degree - 0.1*Math.PI) * radius),
-                                  (int)Math.round(tankS.getLocationV()[1] + (double)tankS.getWidth()/2 + Math.sin(tankS.degree - 3*Math.PI/4) * radius)};
+                int[] X_Turret = {(int)Math.round(tankS.getLocationV()[0] + Math.cos(tankS.degree + 3*Math.PI/4) * radius),
+                                  (int)Math.round(tankS.getLocationV()[0] + Math.cos(tankS.degree + 0.1*Math.PI) * radius),
+                                  (int)Math.round(tankS.getLocationV()[0] + Math.cos(tankS.degree - 0.1*Math.PI) * radius),
+                                  (int)Math.round(tankS.getLocationV()[0] + Math.cos(tankS.degree - 3*Math.PI/4) * radius)};
+                int[] Y_Turret = {(int)Math.round(tankS.getLocationV()[1] + Math.sin(tankS.degree + 3*Math.PI/4) * radius),
+                                  (int)Math.round(tankS.getLocationV()[1] + Math.sin(tankS.degree + 0.1*Math.PI) * radius),
+                                  (int)Math.round(tankS.getLocationV()[1] + Math.sin(tankS.degree - 0.1*Math.PI) * radius),
+                                  (int)Math.round(tankS.getLocationV()[1] + Math.sin(tankS.degree - 3*Math.PI/4) * radius)};
                 graphics.fillPolygon(X_Turret, Y_Turret, 4);
-
             }
             graphics.setColor(Color.RED);
             for(Bullet bullet : tankS.bullets){
-                graphics.fillOval((int)bullet.getLocation()[0], (int)bullet.getLocation()[1], bullet.getWight(), bullet.getHeight());
+                graphics.fillOval((int)bullet.getLocation()[0] - bullet.getRadius(), (int)bullet.getLocation()[1] - bullet.getRadius(), bullet.getRadius()*2, bullet.getRadius()*2);
             }
         }
 
