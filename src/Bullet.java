@@ -4,8 +4,7 @@ public class Bullet {
 
     protected double[] location;
     protected double[] direction;
-    final int wight = 10;
-    final int height = 10;
+    final int radius = 5;
     final double speed = 100;
 
     Bullet(double[] location, double[] direction) {
@@ -35,12 +34,8 @@ public class Bullet {
         return direction;
     }
 
-    public int getWight() {
-        return wight;
-    }
-
-    public int getHeight() {
-        return height;
+    public int getRadius() {
+        return radius;
     }
 
     public double getSpeed() {
