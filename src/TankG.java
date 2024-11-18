@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class TankG {
 
-    final int radius = 50;
+    final int radius = 30;
     protected double[] locationV; // location of the tank (vector of x,y)
     protected double[] directionV; // the direction vector of the tank (vector of x,y)
     protected double HP;
