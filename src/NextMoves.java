@@ -15,7 +15,7 @@ public class NextMoves {
         return new Inputs(1, 1, false, false);
     }
 
-    public Inputs firthTank() {
+    public Inputs fourthTank() {
 
         return new Inputs(1, 1, false, false);
     }
