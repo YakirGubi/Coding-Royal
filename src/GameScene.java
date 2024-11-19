@@ -126,7 +126,7 @@ public class GameScene extends JPanel {
         else tankS[1].doMove(new Inputs(0,0,false,false), DeltaTime);
         if(tankS[2].HP > 0) tankS[2].doMove(nextMoves.thirdTank(), DeltaTime);
         else tankS[2].doMove(new Inputs(0,0,false,false), DeltaTime);
-        if(tankS[3].HP > 0) tankS[3].doMove(nextMoves.firthTank(), DeltaTime);
+        if(tankS[3].HP > 0) tankS[3].doMove(nextMoves.fourthTank(), DeltaTime);
         else tankS[3].doMove(new Inputs(0,0,false,false), DeltaTime);
         if(tankS[4].HP > 0) tankS[4].doMove(nextMoves.fifthTank(), DeltaTime);
         else tankS[4].doMove(new Inputs(0,0,false,false), DeltaTime);
